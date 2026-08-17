@@ -4,14 +4,6 @@
    café's own photographs. Nothing is invented. Where a fact is missing (owner names, the
    full food menu, the roaster) the page says nothing rather than guessing. */
 
-export const STUDIO = {
-  name: 'SNDR Studio',
-  url: 'https://sndr-studio.pages.dev',
-  /* the studio's own mark, from sndr-studio/public/favicon.svg */
-  markPath: 'M50 14 Q54.7 45.3 86 50 Q54.7 54.7 50 86 Q45.3 54.7 14 50 Q45.3 45.3 50 14 Z',
-  markColor: '#ff4b1a',
-};
-
 export const SITE = {
   brand: 'Kaktus',
   brandFull: 'Kaktus Espressobar',
@@ -270,9 +262,8 @@ export const COPY = {
       hoursLabel: 'Opnunartímar',
       emailLabel: 'Netfang',
       socialLabel: 'Instagram',
-      colophon: 'Frumgerð að nýrri vefsíðu fyrir Kaktus Espressobar',
-      builtBy: 'Hönnun og smíði',
-      credit: 'SNDR Studio',
+      credit: 'Hugmynd að endurhönnun. SNDR Studio.',
+      note: 'Óopinber hugmyndavinna, ekki í eigu eða á vegum Kaktus Espressobar.',
     },
     a11y: {
       apertureLabel: 'Myndir frá Kaktus, skipta um mynd við skrun',
@@ -390,9 +381,8 @@ export const COPY = {
       hoursLabel: 'Opening hours',
       emailLabel: 'Email',
       socialLabel: 'Instagram',
-      colophon: 'Prototype for a new Kaktus Espressobar website',
-      builtBy: 'Designed and built by',
-      credit: 'SNDR Studio',
+      credit: 'Redesign concept. SNDR Studio.',
+      note: 'An unofficial concept, not owned by or affiliated with Kaktus Espressobar.',
     },
     a11y: {
       apertureLabel: 'Pictures from Kaktus, changing as you scroll',
