@@ -678,7 +678,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .film-vid { height: auto; width: 100%; max-height: 68svh; object-fit: cover; }
 
   .hd-nav, .hd-lang { display: none; }
-  .hd-burger { display: block; }
+  /* the burger sat 6px past the right edge: header gap + button + burger exceeded the
+     padded width at phone sizes. Pulled back into the padding, not shrunk out of reach. */
+  .hd { gap: 0.6rem; }
+  .hd-burger { display: block; width: 36px; flex: 0 0 auto; margin-right: -6px; }
+  .hd .btn { flex: 0 1 auto; min-width: 0; }
   .call { grid-template-columns: 1fr; }
   .call-img { min-height: 16rem; }
   .gal-grid { grid-template-columns: repeat(2, 1fr); }
