@@ -640,6 +640,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   justify-items: center;
 }
 .ft-credit { color: var(--kx-chalk); }
+/* the studio mark sits below the credit, on its own rule, as it does in the catalogue */
+.ft-badge {
+  display: flex; justify-content: center;
+  margin-top: clamp(1.4rem, 3vh, 2rem);
+  padding-top: clamp(1.2rem, 3vh, 1.75rem);
+  border-top: 1px solid color-mix(in srgb, var(--kx-chalk) 16%, transparent);
+}
 /* the disclaimer every prototype carries: unofficial concept, not the client's site */
 .ft-note {
   text-transform: none;

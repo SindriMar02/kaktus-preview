@@ -1,4 +1,5 @@
 import { SITE, GALLERY } from './content.mjs';
+import { sndrBadgeHtml, sndrBadgeCss } from '../../_tools/sndr-credit.mjs';
 import SIZES from './img-sizes.json' with { type: 'json' };
 
 const esc = (s = '') =>
@@ -132,6 +133,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="preload" as="font" type="font/woff2" href="${A}fonts/ApfelGrotezk-Regular.woff2" crossorigin>
 <link rel="preload" as="image" href="${A}img/hero-plate.webp" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="${A}styles.css">
+<style>${sndrBadgeCss(A)}</style>
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 </head>
 <body>
@@ -364,6 +366,7 @@ ${roomBlock(SITE.rooms[1], c.rooms.listasafn, 'listo-salur', c.rooms.listasafn.a
       <span class="ft-credit">${esc(c.footer.credit)}</span>
       <span class="ft-note">${esc(c.footer.note)}</span>
     </p>
+    <div class="ft-badge">${sndrBadgeHtml({ dark: true, assetBase: A })}</div>
   </div>
 </footer>
 
