@@ -4,6 +4,11 @@
    café's own photographs. Nothing is invented. Where a fact is missing (owner names, the
    full food menu, the roaster) the page says nothing rather than guessing. */
 
+import { sndrCredit } from '../../_tools/sndr-credit.mjs';
+
+/* one definition of the credit and the disclaimer, shared by every build */
+const CREDIT = sndrCredit({ nefnifall: 'Kaktus Espressobar', eignarfall: 'Kaktus Espressobar' });
+
 export const SITE = {
   brand: 'Kaktus',
   brandFull: 'Kaktus Espressobar',
@@ -262,8 +267,7 @@ export const COPY = {
       hoursLabel: 'Opnunartímar',
       emailLabel: 'Netfang',
       socialLabel: 'Instagram',
-      credit: 'Hugmynd að endurhönnun. SNDR Studio.',
-      note: 'Óopinber hugmyndavinna, ekki í eigu eða á vegum Kaktus Espressobar.',
+      ...CREDIT.is,
     },
     a11y: {
       apertureLabel: 'Myndir frá Kaktus, skipta um mynd við skrun',
@@ -381,8 +385,7 @@ export const COPY = {
       hoursLabel: 'Opening hours',
       emailLabel: 'Email',
       socialLabel: 'Instagram',
-      credit: 'Redesign concept. SNDR Studio.',
-      note: 'An unofficial concept, not owned by or affiliated with Kaktus Espressobar.',
+      ...CREDIT.en,
     },
     a11y: {
       apertureLabel: 'Pictures from Kaktus, changing as you scroll',
