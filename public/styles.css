@@ -1,0 +1,682 @@
+/* Kaktus Espressobar - prototype stylesheet.
+   Visual language is the TASTE title card and the EXQUIS layout language: a warm paper
+   ground, giant high-contrast Didone, edge-to-edge untinted photography, one saturated
+   colour spent on TYPE only, tracked-caps credits. The accent never becomes the ground.
+   All custom props and keyframes are prefixed kx- so this build cannot bleed into another. */
+
+/* ---------- fonts ---------- */
+@font-face {
+  font-family: 'Gloock';
+  src: url('fonts/Gloock.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('fonts/ApfelGrotezk-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('fonts/ApfelGrotezk-Mittel.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('fonts/ApfelGrotezk-Fett.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* ---------- tokens ---------- */
+:root {
+  --kx-paper: #f6f1e8;
+  --kx-paper-2: #ede6d9;
+  --kx-ink: #171310;
+  --kx-green: #2f6b25;      /* the one saturated colour, on type and one panel only */
+  --kx-green-deep: #1c3f18;
+  --kx-mute: #6b6459;
+  --kx-chalk: #f8f5ee;
+  /* the hero sits on a photograph, so its type is the accent lifted until it glows,
+     the way the reference's title glows against its scene. Same hue, display use only. */
+  --kx-hero-ink: #b7dc8a;
+
+  /* One typeset display voice. Gloock: condensed, very high contrast, so a heading can
+     run wide at size and "Fríkirkjuvegur" fits on a line without its own smaller step.
+     Bodoni was two thirds wider and could never span a measure, which is what forced the
+     per-section exceptions. The brand itself is the logo, not type, so no second face. */
+  --kx-display: 'Gloock', 'Times New Roman', serif;
+  --kx-body: 'Apfel Grotezk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --kx-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --kx-pad: clamp(1.1rem, 4vw, 3.5rem);
+  --kx-max: 1600px;
+  --kx-hd: 64px;
+}
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--kx-paper);
+  color: var(--kx-ink);
+  font-family: var(--kx-body);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--kx-green) 22%, transparent);
+}
+#matsedill, #filman, #stadir, #myndir, #um-okkur, #efni { scroll-margin-top: 84px; }
+h1, h2, h3, p, dl, dd, figure, ul { margin: 0; }
+ul { list-style: none; padding: 0; }
+img, video { display: block; max-width: 100%; height: auto; }
+picture { display: contents; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--kx-green); outline-offset: 3px; }
+.on-dark :focus-visible { outline-color: var(--kx-chalk); }
+
+.vh {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.skip {
+  position: absolute; left: 0; top: 0; z-index: 60;
+  transform: translateY(-120%);
+  background: var(--kx-green); color: var(--kx-chalk);
+  padding: 0.75rem 1.25rem; font-weight: 700; text-decoration: none;
+}
+.skip:focus { transform: translateY(0); }
+
+/* ---------- type ---------- */
+/* The display face is the page. Sizes are deliberately enormous and set tight, the way
+   the reference sets a title card: the words are the composition, not a label on it. */
+.d-hero {
+  font-family: var(--kx-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 11.4vw, 10rem);
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+.d-xl {
+  font-family: var(--kx-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 7vw, 6.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.008em;
+  text-transform: uppercase;
+}
+.d-lg {
+  font-family: var(--kx-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.008em;
+}
+.cap {
+  font-family: var(--kx-body);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--kx-mute);
+}
+.on-dark .cap { color: color-mix(in srgb, var(--kx-chalk) 82%, transparent); }
+.cap-sp { margin-top: 2rem; }
+.accent { color: var(--kx-green); }
+
+.ln { position: relative; text-decoration: none; padding-bottom: 1px; }
+.ln::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 260ms var(--kx-ease);
+}
+.ln:hover::after, .ln:focus-visible::after { transform: scaleX(1); }
+.hrs dd .ln, address .ln, .ft-col p .ln { display: inline-flex; align-items: center; min-height: 24px; }
+
+/* one button shape on the page: an outlined capsule in the accent */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: var(--kx-green);
+  font-family: var(--kx-body);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 240ms var(--kx-ease), color 240ms var(--kx-ease);
+}
+.btn:hover { background: var(--kx-green); color: var(--kx-chalk); }
+.btn-light { color: var(--kx-chalk); }
+.btn-light:hover { background: var(--kx-chalk); color: var(--kx-green-deep); }
+
+/* ---------- reveal ---------- */
+/* Each word gets its own mask and rises out of it. The wrapper must be inline-block so
+   it establishes a box to clip against, and top-aligned so a descender in one word does
+   not shove the line. No horizontal clipping: overflow is on the Y axis only in effect,
+   because the mask is exactly the word's own box. */
+.rv-src { display: block; }
+.rv .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders and the counter-rotation, so neither is cropped */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.rv .wi {
+  display: inline-block;
+  transform-origin: 0% 100%;
+  will-change: transform, opacity;
+}
+/* before the split runs, and if it never does, the text is simply there */
+.rv:not(.is-split) .rv-src { opacity: 1; }
+
+/* ---------- header ---------- */
+/* The header sits ON the title card until the card has gone, then becomes a solid bar.
+   Nothing separates it from the picture at rest: no fill, no rule, no shadow. */
+.hd {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  display: flex; align-items: center; gap: clamp(0.75rem, 2.4vw, 2rem);
+  height: calc(var(--kx-hd) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) max(var(--kx-pad), env(safe-area-inset-right)) 0 max(var(--kx-pad), env(safe-area-inset-left));
+  background: transparent;
+  color: var(--kx-hero-ink);
+  transition: background 420ms var(--kx-ease), color 420ms var(--kx-ease);
+}
+.hd.is-solid { background: var(--kx-paper); color: var(--kx-ink); }
+/* the lockup is a one-colour mark, so it can simply be recoloured to match the bar */
+.hd-logo {
+  width: auto; height: clamp(26px, 3.2vw, 34px);
+  filter: brightness(0) saturate(100%) invert(89%) sepia(21%) saturate(689%) hue-rotate(43deg) brightness(96%) contrast(88%);
+  transition: filter 420ms var(--kx-ease);
+}
+.hd.is-solid .hd-logo { filter: none; }
+/* the page starts under the header, because the header no longer occupies space */
+.hero { margin-top: calc((var(--kx-hd) + env(safe-area-inset-top)) * -1); }
+.hd-mark { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; margin-right: auto; }
+
+.hd-nav ul { display: flex; gap: clamp(0.9rem, 2vw, 2rem); }
+.hd-lang {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin: 0;
+}
+.hd-lang-on { opacity: 1; }
+.hd-lang .ln { opacity: 0.55; transition: opacity 240ms var(--kx-ease); }
+.hd-lang .ln:hover, .hd-lang .ln:focus-visible { opacity: 1; }
+.hd-lang-sep { opacity: 0.35; }
+.hd-nav a, .hd-lang, .hd-lang * {
+  font-family: var(--kx-body);
+  font-weight: 700;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.hd .btn { padding: 0.5rem 1.1rem; min-height: 34px; }
+.hd-burger { display: none; width: 40px; height: 40px; position: relative; }
+.hd-bar {
+  position: absolute; left: 9px; right: 9px; height: 2px; background: currentColor;
+  transition: transform 320ms var(--kx-ease);
+}
+.hd-bar:nth-of-type(1) { top: 16px; }
+.hd-bar:nth-of-type(2) { top: 23px; }
+.hd.is-open .hd-bar:nth-of-type(1) { transform: translateY(3.5px) rotate(45deg); }
+.hd.is-open .hd-bar:nth-of-type(2) { transform: translateY(-3.5px) rotate(-45deg); }
+.drawer {
+  position: fixed; top: calc(var(--kx-hd) + env(safe-area-inset-top)); left: 0; right: 0; z-index: 39;
+  background: var(--kx-paper);
+  padding: 1.25rem max(var(--kx-pad), env(safe-area-inset-left)) 2rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--kx-ink) 14%, transparent);
+  overscroll-behavior: contain;
+}
+.drawer ul { display: grid; gap: 0.9rem; }
+.drawer a { font-family: var(--kx-display); font-weight: 400; font-size: 1.6rem; text-transform: uppercase; text-decoration: none; }
+
+/* ---------- 1. hero: the title card ---------- */
+/* The reference is a frame, not a page: a fisheye plate with its corners crushed to
+   black, one word centred on it, and the facts set around that word like film credits.
+   The plate un-distorts as you scroll, so the title card becomes an ordinary photograph. */
+.hero {
+  position: relative;
+  height: 100svh;
+  /* the card is the full screen, header included */
+  min-height: 34rem;
+  overflow: hidden;
+  background: #05060a;
+  isolation: isolate;
+}
+.hero-plate,
+.hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+.hero-plate { object-fit: cover; }
+/* the canvas replaces the plate only once it has drawn a finished frame */
+.hero.is-gl .hero-plate { visibility: hidden; }
+.hero-canvas { display: block; }
+
+.hero-card {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vh, 1.4rem) clamp(1rem, 4vw, 4rem);
+  padding: 0 clamp(1rem, 5vw, 5rem);
+  color: var(--kx-hero-ink);
+  text-align: center;
+  pointer-events: none;
+}
+.hero-over { grid-column: 1 / -1; color: inherit; }
+/* their own lockup, at size, in the hero colour: not a typeset stand-in */
+.hero-word { grid-column: 2; grid-row: 1; margin: 0; line-height: 0; }
+.hero-logo {
+  width: auto;
+  height: clamp(9rem, 30vh, 20rem);
+  max-width: min(78vw, 34rem);
+  object-fit: contain;
+}
+.hero-over { display: none; }
+  .hero-side-placeholder{}
+.hero-side {
+  grid-row: 1;
+  display: grid;
+  gap: 0.35rem;
+  line-height: 1.1;
+}
+.hero-side-l { grid-column: 1; justify-self: center; }
+.hero-side-r { grid-column: 3; justify-self: center; }
+.hero-side-k { color: inherit; font-size: 0.6875rem; }
+.hero-side-v {
+  font-family: var(--kx-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: inherit;
+}
+/* The fisheye magnifies the brightest part of the plate into the centre, so the two
+   credits that sit low on it need a ground of their own. A scrim, not a heavier grade:
+   the picture stays as shot and the type clears AA. */
+.hero-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 46%;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(5, 6, 10, 0.86) 0%, rgba(5, 6, 10, 0.55) 42%, transparent 100%);
+  pointer-events: none;
+}
+/* Bottom centre, the way the reference sets its presenting credit, and inside the scrim
+   so it is legible over the brightest part of the lens. */
+.hero-under {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(clamp(3.6rem, 9vh, 5.6rem) + env(safe-area-inset-bottom));
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  color: inherit;
+}
+.hero-under .cap { color: inherit; }
+.hero-mark { font-size: 0.7rem; line-height: 1; opacity: 0.85; }
+
+/* hero links glow with the credits rather than sitting in the page accent */
+.hero .lnk { color: var(--kx-hero-ink); }
+.hero-foot {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(clamp(1.2rem, 4vh, 2.6rem) + env(safe-area-inset-bottom));
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+/* ---------- the link, which is not a pill ---------- */
+/* The label is set twice in a box exactly one line tall and rolls: the copy leaving and
+   the copy arriving are the same word, so the eye reads a mechanism rather than a fade.
+   Both the box AND each copy need the explicit height or the label simply prints twice. */
+.lnk {
+  --lh: 1.15em;
+  position: relative;
+  display: inline-block;
+  /* the target is the link; the roll box is the child, so padding can make the
+     touch area 24px+ without the label printing twice (WCAG 2.5.8) */
+  padding: 0.75rem 0;
+  font-family: var(--kx-body);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  line-height: var(--lh);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--kx-green);
+  padding-bottom: 0;
+  pointer-events: auto;
+}
+.lnk-c { display: block; height: var(--lh); overflow: hidden; }
+.lnk-i {
+  display: block;
+  transition: transform 520ms var(--kx-ease);
+}
+.lnk-i > span {
+  display: block;
+  height: var(--lh);
+  line-height: var(--lh);
+}
+.lnk:hover .lnk-i,
+.lnk:focus-visible .lnk-i { transform: translateY(calc(var(--lh) * -1)); }
+.lnk::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 520ms var(--kx-ease);
+}
+.lnk:hover::after,
+.lnk:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+.on-dark .lnk { color: var(--kx-chalk); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lnk-i, .lnk::after { transition: none; }
+}
+
+/* ---------- 2. marquee ---------- */
+.mq {
+  border-top: 1px solid color-mix(in srgb, var(--kx-ink) 16%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--kx-ink) 16%, transparent);
+  padding: 0.85rem 0;
+  overflow: hidden;
+}
+.mq-track { display: flex; width: max-content; }
+@media (prefers-reduced-motion: no-preference) {
+  .mq-track { animation: kx-mq 38s linear infinite; }
+}
+@keyframes kx-mq { to { transform: translateX(-50%); } }
+@keyframes kx-mq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .mq-track-rev { animation: kx-mq-rev 44s linear infinite; }
+}
+/* the pair bracket the statement, so only the outer edges carry a rule */
+.mq { border-bottom: 0; }
+.mq-rev { border-top: 0; }
+.mq-run {
+  display: flex; align-items: center; gap: 1.6rem;
+  padding-right: 1.6rem;
+  font-family: var(--kx-display);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.1vw, 1.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--kx-green);
+  white-space: nowrap;
+}
+.mq-star { font-size: 0.7em; opacity: 0.75; }
+
+/* ---------- bands ----------
+   A band runs edge to edge, owns its own ground, and butts hard against its neighbours.
+   No gutters, no rounded corners, no shared max-width island floating in the middle. */
+.d-2 {
+  font-family: var(--kx-display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 6.2vw, 5.4rem);
+  line-height: 1.0;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+/* ---------- 3. statement ---------- */
+.st {
+  padding: clamp(2.75rem, 8vh, 5.5rem) var(--kx-pad);
+  text-align: center;
+}
+.st-h { color: var(--kx-green); max-width: 24ch; margin-inline: auto; text-wrap: balance; }
+.st-body { max-width: 42ch; margin: clamp(1.4rem, 3vh, 2.2rem) auto 0; color: color-mix(in srgb, var(--kx-ink) 78%, transparent); }
+
+/* ---------- 4. menu call: photo beside a saturated panel ---------- */
+.call { display: grid; grid-template-columns: 1fr 1fr; }
+.call-fig { position: relative; }
+.call-img { width: 100%; height: 100%; min-height: clamp(20rem, 52vh, 34rem); object-fit: cover; }
+.call-panel {
+  background: var(--kx-green-deep);
+  color: var(--kx-chalk);
+  display: grid; align-content: center; justify-items: center; gap: 1.8rem;
+  padding: clamp(2.5rem, 7vw, 5rem);
+  text-align: center;
+}
+.call-h { text-wrap: balance; }
+
+/* ---------- 5. menu ---------- */
+.menu { padding: clamp(2.75rem, 8vh, 5.5rem) var(--kx-pad); background: var(--kx-paper); }
+.menu-in { max-width: var(--kx-max); margin-inline: auto; }
+.menu-head { text-align: center; }
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: clamp(2.5rem, 6vw, 6rem);
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+}
+.mlist { margin-top: 1rem; }
+.mlist li { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.4rem 0; font-size: 1.0625rem; }
+.mlist-n { font-weight: 500; }
+.mlist-d { flex: 1; border-bottom: 1px dotted color-mix(in srgb, var(--kx-ink) 32%, transparent); transform: translateY(-0.25rem); }
+.mlist-p { font-variant-numeric: tabular-nums; color: var(--kx-green); font-weight: 700; }
+.mlist-sm li { font-size: 0.9375rem; }
+.mfood { margin-top: 1rem; display: grid; gap: 1.3rem; }
+.mfood-t { display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; font-size: 1.0625rem; }
+.mfood-p { color: var(--kx-green); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mfood-d { color: color-mix(in srgb, var(--kx-ink) 74%, transparent); font-size: 0.9375rem; }
+.menu-note {
+  margin: clamp(2.5rem, 6vh, 4rem) auto 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid color-mix(in srgb, var(--kx-ink) 18%, transparent);
+  max-width: 46rem;
+  font-size: 0.875rem;
+  color: var(--kx-mute);
+}
+
+/* ---------- 6. the film ---------- */
+/* The film is a hard-edged rectangle. It carries its own retro grade in the file; a
+   CSS mask on top of that reads as a frame effect, not as stock. */
+.film {
+  background: var(--kx-ink);
+  color: var(--kx-chalk);
+  padding: clamp(2.75rem, 8vh, 5.5rem) var(--kx-pad);
+}
+.film-in {
+  max-width: var(--kx-max); margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: center;
+}
+/* The film is a portrait clip beside the text, not a section of its own. Its HEIGHT is
+   the constrained dimension and the width follows the 9:16, so it can never grow taller
+   than the reading column no matter how wide the viewport gets. */
+.film-stage { position: relative; justify-self: end; width: auto; }
+.film-vid {
+  height: min(56svh, 29rem);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: #000;
+}
+.film-credits { display: grid; gap: 1.4rem; }
+.film-h { color: var(--kx-chalk); }
+.film-body { color: color-mix(in srgb, var(--kx-chalk) 84%, transparent); max-width: 34rem; }
+.film-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1.2rem 2rem; margin-top: 0.6rem; }
+.film-grid div { display: grid; gap: 0.3rem; }
+.film-grid dt { font-family: var(--kx-body); font-weight: 700; font-size: 0.625rem; letter-spacing: 0.18em; text-transform: uppercase; color: color-mix(in srgb, var(--kx-chalk) 74%, transparent); }
+.film-grid dd { margin: 0; font-size: 0.9375rem; }
+
+/* ---------- 7 + 8. rooms ---------- */
+.rm { position: relative; }
+.rm-fig { position: relative; }
+.rm-img { width: 100%; height: clamp(22rem, 72svh, 46rem); object-fit: cover; }
+.rm-tx {
+  padding: clamp(2rem, 5vh, 3.25rem) var(--kx-pad) clamp(2.5rem, 7vh, 4.25rem);
+  display: grid;
+  gap: clamp(1.25rem, 3vh, 2.25rem);
+}
+/* the name owns the full measure */
+.rm-tx > :first-child { max-width: 100%; }
+/* the details sit under it in two columns */
+.rm-tx > :last-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: clamp(1.25rem, 4vw, 4rem);
+  align-items: start;
+}
+.rm-name { text-wrap: balance; }
+.rm-blurb { max-width: 38rem; font-size: clamp(1rem, 1.4vw, 1.1875rem); }
+.hrs { margin-top: 1.6rem; display: grid; gap: 0.45rem; }
+.hrs > div { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; align-items: baseline; }
+.hrs dt {
+  min-width: 12rem;
+  font-family: var(--kx-body); font-weight: 700; font-size: 0.625rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--kx-mute);
+}
+.hrs dd { margin: 0; font-variant-numeric: tabular-nums; }
+.rm-alt { background: var(--kx-ink); color: var(--kx-chalk); }
+.rm-alt .rm-name { color: var(--kx-chalk); }
+.rm-alt .cap, .rm-alt .hrs dt { color: color-mix(in srgb, var(--kx-chalk) 78%, transparent); }
+
+/* ---------- 9. gallery ---------- */
+.gal { padding: clamp(2.75rem, 8vh, 5.5rem) 0 0; background: var(--kx-paper); }
+.gal-h { text-align: center; padding: 0 var(--kx-pad); }
+.gal-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; margin-top: clamp(1.75rem, 4vh, 2.5rem); }
+.gal-c { position: relative; overflow: hidden; }
+.gal-img { width: 100%; height: 100%; object-fit: cover; }
+.gal-cap {
+  position: absolute; left: 0; bottom: 0;
+  padding: 0.4rem 0.7rem 0.36rem;
+  background: var(--kx-green); color: var(--kx-chalk);
+  opacity: 0; transform: translateY(0.4rem);
+  transition: opacity 300ms var(--kx-ease), transform 300ms var(--kx-ease);
+}
+.gal-c:hover .gal-cap, .gal-c:focus-within .gal-cap { opacity: 1; transform: none; }
+.gal-c1 { grid-column: span 3; aspect-ratio: 4 / 3; }
+.gal-c2 { grid-column: span 3; aspect-ratio: 4 / 3; }
+.gal-c3 { grid-column: span 4; aspect-ratio: 16 / 9; }
+.gal-c4 { grid-column: span 2; aspect-ratio: 3 / 4; }
+.gal-c5 { grid-column: span 2; aspect-ratio: 3 / 4; }
+.gal-c6 { grid-column: span 2; aspect-ratio: 3 / 4; }
+.gal-c7 { grid-column: span 2; aspect-ratio: 3 / 4; }
+
+/* ---------- 10. about ---------- */
+.ab {
+  max-width: var(--kx-max); margin-inline: auto;
+  padding: clamp(2.75rem, 8vh, 5.5rem) var(--kx-pad);
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.ab-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.ab-body { margin-top: 1.2rem; max-width: 40rem; }
+
+/* ---------- 11. footer, as a credit block ---------- */
+.ft {
+  background: var(--kx-ink);
+  color: var(--kx-chalk);
+  padding: clamp(3.5rem, 9vh, 6rem) max(var(--kx-pad), env(safe-area-inset-right)) calc(clamp(2rem, 5vh, 3rem) + env(safe-area-inset-bottom)) max(var(--kx-pad), env(safe-area-inset-left));
+}
+.ft-in { max-width: var(--kx-max); margin-inline: auto; }
+.ft-h { color: var(--kx-chalk); text-align: center; }
+.ft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  text-align: center;
+}
+.ft-col address { font-style: normal; display: grid; gap: 0.2rem; margin-top: 0.7rem; justify-items: center; }
+.ft-hrs { margin-top: 0.7rem; display: grid; gap: 0.35rem; }
+.ft-hrs > div { display: grid; gap: 0.1rem; }
+.ft-hrs dt { font-size: 0.875rem; color: color-mix(in srgb, var(--kx-chalk) 78%, transparent); }
+.ft-hrs dd { margin: 0; font-variant-numeric: tabular-nums; }
+.ft-col p + p { margin-top: 0.45rem; }
+.ft-mark { display: grid; justify-items: center; align-content: center; }
+.ft-mark img { width: clamp(4.5rem, 8vw, 7rem); filter: brightness(0) invert(1); opacity: 0.92; }
+.ft-colophon {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding-top: 1.1rem;
+  border-top: 1px solid color-mix(in srgb, var(--kx-chalk) 26%, transparent);
+  font-family: var(--kx-body); font-weight: 700;
+  font-size: 0.625rem; letter-spacing: 0.18em; text-transform: uppercase;
+  text-align: center;
+  color: color-mix(in srgb, var(--kx-chalk) 78%, transparent);
+}
+.ft-colophon span { color: var(--kx-chalk); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1024px) {
+  .rm-tx > :last-child { grid-template-columns: 1fr; }
+  .ab { grid-template-columns: 1fr; }
+  .ab-fig { width: min(100%, 18rem); }
+}
+@media (max-width: 640px) {
+  /* three columns cannot hold a word plus two addresses at phone width, so the card
+     becomes a single centred column and the two rooms sit side by side beneath it */
+  .hero-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: clamp(0.7rem, 2vh, 1.2rem);
+  }
+  .hero-word { grid-column: 1; grid-row: 1; }
+  .hero-side { grid-row: 2; display: inline-grid; }
+  .hero-side-l, .hero-side-r { grid-column: 1; justify-self: center; }
+  .hero-sides { display: flex; }
+  .hero-under { bottom: calc(3.4rem + env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 820px) {
+  /* stacked on a phone: the clip takes the column rather than sitting narrow in it */
+  .film-in { grid-template-columns: 1fr; justify-items: stretch; }
+  .film-stage { justify-self: stretch; width: 100%; }
+  .film-vid { height: auto; width: 100%; max-height: 68svh; object-fit: cover; }
+
+  .hd-nav, .hd-lang { display: none; }
+  .hd-burger { display: block; }
+  .call { grid-template-columns: 1fr; }
+  .call-img { min-height: 16rem; }
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+  .gal-c1, .gal-c2, .gal-c3 { grid-column: span 2; aspect-ratio: 16 / 10; }
+  .gal-c4, .gal-c5, .gal-c6, .gal-c7 { grid-column: span 1; aspect-ratio: 3 / 4; }
+  .gal-cap { opacity: 1; transform: none; }
+  .hrs dt { min-width: 0; flex: 1 0 100%; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .rv .cl-i { clip-path: none; transform: none; transition: none; }
+  .gal-cap { opacity: 1; transform: none; transition: none; }
+  .mq-track { animation: none; }
+}

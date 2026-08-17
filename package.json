@@ -1,0 +1,7 @@
+{
+  "name": "kaktus-preview",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node src/build.mjs" },
+  "devDependencies": { "puppeteer-core": "^23.0.0" }
+}

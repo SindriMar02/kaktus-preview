@@ -1,0 +1,29 @@
+# --- never in this repo: internal, commercial, or client-critical material ---
+# audit of the client's current site, the outreach hook, the design brief.
+# these live in ../_internal/kaktus/ and must not sit in a public repo bearing
+# the client's name. keep this list even though they have been moved.
+AUDIT.md
+HANDOFF.md
+DESIGN.md
+_audit/
+_internal/
+_refs/
+
+# --- build output: published to gh-pages by deploy.sh, never committed to main ---
+dist/
+
+# --- local only ---
+node_modules/
+_archive/
+.reel-frames/
+_spec/
+
+# --- throwaway probes and screenshots from verification runs ---
+_*.mjs
+!_serve.cjs
+*.png
+*.jpg
+!public/**/*.png
+!public/**/*.jpg
+!_assets/photos/*.jpg
+!_assets/photos/*.png
