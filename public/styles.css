@@ -634,7 +634,21 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-align: center;
   color: color-mix(in srgb, var(--kx-chalk) 78%, transparent);
 }
-.ft-colophon span { color: var(--kx-chalk); }
+.ft-colophon {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 0.5rem 1.1rem;
+}
+.ft-colophon-t { color: color-mix(in srgb, var(--kx-chalk) 78%, transparent); }
+/* the studio credit: its own mark, its own colour, a real link out */
+.ft-studio {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  min-height: 24px;
+  color: var(--kx-chalk);
+  text-decoration: none;
+  transition: opacity 240ms var(--kx-ease);
+}
+.ft-studio:hover, .ft-studio:focus-visible { opacity: 0.72; }
+.ft-studio-mark { flex: 0 0 auto; display: block; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1024px) {

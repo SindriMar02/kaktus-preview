@@ -1,4 +1,4 @@
-import { SITE, GALLERY } from './content.mjs';
+import { SITE, GALLERY, STUDIO } from './content.mjs';
 import SIZES from './img-sizes.json' with { type: 'json' };
 
 const esc = (s = '') =>
@@ -360,7 +360,15 @@ ${roomBlock(SITE.rooms[1], c.rooms.listasafn, 'listo-salur', c.rooms.listasafn.a
         <img src="${A}img/logo.png" alt="" width="${SIZES.logo[0]}" height="${SIZES.logo[1]}" loading="lazy" decoding="async">
       </div>
     </div>
-    <p class="ft-colophon">${esc(c.footer.colophon)} <span>${esc(c.footer.credit)}</span></p>
+    <p class="ft-colophon">
+      <span class="ft-colophon-t">${esc(c.footer.colophon)}</span>
+      <a class="ft-studio" href="${STUDIO.url}" rel="noopener">
+        <svg class="ft-studio-mark" viewBox="0 0 100 100" width="16" height="16" aria-hidden="true" focusable="false">
+          <path d="${STUDIO.markPath}" fill="${STUDIO.markColor}"/>
+        </svg>
+        <span class="vh">${esc(c.footer.builtBy)} </span><span>${esc(STUDIO.name)}</span>
+      </a>
+    </p>
   </div>
 </footer>
 
