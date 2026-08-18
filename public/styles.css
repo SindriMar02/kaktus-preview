@@ -668,14 +668,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   /* three columns cannot hold a word plus two addresses at phone width, so the card
      becomes a single centred column and the two rooms sit side by side beneath it */
   .hero-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
     gap: clamp(0.7rem, 2vh, 1.2rem);
   }
-  .hero-word { grid-column: 1; grid-row: 1; }
-  .hero-side { grid-row: 2; display: inline-grid; }
-  .hero-side-l, .hero-side-r { grid-column: 1; justify-self: center; }
-  .hero-sides { display: flex; }
+  .hero-word { grid-column: 1 / -1; grid-row: 1; }
+  /* Both rooms used to land in the SAME cell and paint on top of each other
+     ("FRIKIRKJUVEGUR 7" over "VITASTIGUR 12", the numerals colliding into "172").
+     They inherited .hero-side{grid-row:2} with no column of their own, and the rule
+     meant to lay them out targeted .hero-sides - a wrapper that does not exist in the
+     markup, so it never matched anything. Two real columns instead: the pair reads
+     side by side as designed and the card gains no height. */
+  .hero-side { grid-row: 2; display: grid; }
+  .hero-side-l { grid-column: 1; justify-self: center; }
+  .hero-side-r { grid-column: 2; justify-self: center; }
   .hero-under { bottom: calc(3.4rem + env(safe-area-inset-bottom)); }
 }
 
