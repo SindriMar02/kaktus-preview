@@ -123,7 +123,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <meta property="og:title" content="${esc(c.title)}">
 <meta property="og:description" content="${esc(c.description)}">
 <meta property="og:url" content="${CANON}">
-<meta property="og:image" content="${CANON}img/dyr.jpg">
+<meta property="og:image" content="${base}/img/dyr.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F6F1E8">
 <link rel="icon" href="${A}favicon.svg" type="image/svg+xml">
